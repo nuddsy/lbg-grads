@@ -172,3 +172,66 @@ SELECT
 FROM staff
 WHERE staff_id = 2;
 
+-- 21 List all the movies that Fred Costner has appeared in.
+-- first_name "Fred" actor
+-- last_name "Costner" actor
+-- actor_id actor
+-- actor_id film_actor
+-- film_id film_actor
+-- film_id film
+-- title film
+
+SELECT
+	f.title
+FROM film as f
+INNER JOIN film_actor as fa
+ON f.film_id = fa.film_id
+INNER JOIN actor as a
+ON fa.actor_id = a.actor_id
+WHERE
+	a.first_name = "Fred" AND a.last_name = "Costner";
+    
+-- 22 How many distinct countries are there?
+-- country country
+SELECT
+	COUNT(c.country),
+    c.country as country_name
+FROM country As c
+group by country;
+-- 109 rows
+
+-- 23 List the name of every language in reverse-alphabetical order.
+-- name language
+
+SELECT
+	`name`,
+    language_id
+FROM `language`
+ORDER BY `name` DESC;
+
+-- 24 List the full names of every actor whose surname ends with '-son' in alphabetical order by their forename.
+-- last_name actor
+-- first_name actor
+
+SELECT
+	concat(first_name, " ", last_name)
+FROM actor
+WHERE last_name like "%son"
+order by first_name asc;
+
+-- 25 Which category contains the most films?
+-- film_id film_category
+-- category_id film_category
+-- category_id category
+-- name category
+
+SELECT
+	c.`name`,
+    COUNT(fc.film_id)
+FROM category AS c
+INNER JOIN film_category AS fc
+ON c.category_id = fc.category_id
+GROUP BY c.`name`
+ORDER BY COUNT(fc.film_id) DESC
+;
+-- Sports
