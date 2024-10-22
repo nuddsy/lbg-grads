@@ -61,6 +61,7 @@ WHERE length =
 SELECT *
 FROM film
 WHERE find_in_set("Deleted Scenes", special_features);
+#WHERE special_features LIKE "%deleted scenes%";
 
 -- 11 Using HAVING, reverse-alphabetically list the last names that are not repeated.
 SELECT last_name
@@ -98,6 +99,26 @@ LIMIT 1;
 -- film_id inventory
 -- film_id film 
 -- title film
+#SELECT
+#	f.title,
+#	r.return_date
+#from rental AS r
+#inner join inventory as i 
+#on r.inventory_id = i.inventory_id
+#inner join film as f
+#on i.film_id = f.film_id
+#where f.title = "Academy Dinosaur"
+#ORDER BY r.return_date desc
+#LIMIT 1
+#;
+
+-- Need to redo to see which one is still out and when it is due to be returned!
+-- title film
+-- film_id film 
+-- film_id inventory
+-- inventory_id inventory
+-- inventory_id rental
+-- find the one that doesnt have return date
 SELECT
 	f.title,
 	r.return_date
@@ -106,9 +127,10 @@ inner join inventory as i
 on r.inventory_id = i.inventory_id
 inner join film as f
 on i.film_id = f.film_id
-where f.title = "Academy Dinosaur"
-ORDER BY r.return_date desc
-LIMIT 1;
+where f.title = "Academy Dinosaur" AND r.return_date = NULL
+#ORDER BY r.return_date desc
+#LIMIT 1
+;
 
 -- 15 What is the average runtime of all films?
 SELECT AVG(`length`)
